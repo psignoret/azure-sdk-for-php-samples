@@ -1,13 +1,11 @@
 #Windows Azure Active Directory SDK for PHP
 
-This PHP package will give you with a quick and easy way to set up your first app that's integrated with Windows Azure Active Directory. The sample apps included in download are designed to run on any platform.
+This PHP package will give you with a quick and easy way to set up your first app that's integrated with Windows Azure Active Directory using SimpleSAML PHP. The sample apps included in download are designed to run on any platform.
 
 By the end of these walkthroughs, you should be able to build a running application with the following features:
 
 * WebSSO using WS-Federation
 * Graph API query capabiltiy using OpenAuth 2.0
-
-[Refer to our Wiki](https://github.com/MSOpenTech/AzureAD-Node-Sample/wiki) for detailed walkthroughs on how to use this package.
 
 We've released all of the source code for this running example in GitHub under an Apache 2.0 license, so feel free to clone (or even better, fork!) and provide feedback on the forums.
 
@@ -34,20 +32,12 @@ Next, clone the sample repo and install the NPM.
 
 From your shell or command line:
 
-* `$ git clone https://github.com/MSOpenTech/AzureAD-Node-Sample`
+* `$ git clone https://github.com/WindowsAzure/azure-sdk-for-php-samples.git`
 
 ### Step 5: Add Configuration Values and Run Application
 
 
-
-The login credentials for the sample application are:
-
-Username: `aaUser@graphDir1.onMicrosoft.com`
-
-Password: `P@ssword1`
-
-
-The configuration values you'll need to edit are found in ```app.js ``` and documented in the code. As much as possible they will match the fields in the Azure Management Portal as discussed in [Adding, Updating, and Removing an App](http://msdn.microsoft.com/en-us/library/windowsazure/dn132599.aspx).
+The configuration values you'll need to edit are found in ```federation.ini ``` and documented in the code. As much as possible they will match the fields in the Azure Management Portal as discussed in [Adding, Updating, and Removing an App](http://msdn.microsoft.com/en-us/library/windowsazure/dn132599.aspx).
 
 ## Detailed Information
 
@@ -56,21 +46,26 @@ The configuration values you'll need to edit are found in ```app.js ``` and docu
 
 The website in this sample app demonstrates the following technologies from the Windows Azure AD from Microsoft, and includes open source modules for each scenario.
 
-- Web Single Sign-In (WebSSO): ``` passport-azure-ad```
-- Access to Windows Azure Active Directory through a RESTful Graph API: ```node-waad```
+- Web Single Sign-In (WebSSO)
+- Access to Windows Azure Active Directory through a RESTful Graph API
 
 
-#### Web SSO: [Windows Azure Active Directory Passport.js Plug-In](https://github.com/MSOpenTech/passport-azure-ad)
+### About SimpleSAML PHP
 
-With Windows Azure AD Web Single Sign-On (WebSSO) you will have the ability to seamlessly integrate your node.js application in to your existing identity platform while using the same credentials you use in the office and online.
+[SimpleSAML PHP](http://simplesamlphp.org) is an award-winning application written in native PHP that deals with authentication. The project is led by UNINETT, has a large user base, a helpful user community and a large set of external contributors.
 
-For more information on how this module works, refer to the [README](https://github.com/MSOpenTech/passport-azure-ad) in the provided module or read it online.
+SimpleSAMLphp is having a main focus on providing support for:
 
-#### Graph API: [Auth0's Javascript REST library for Windows Azure AD](https://github.com/auth0/node-waad)
+* SAML 2.0 as a Service Provider.
+* SAML 2.0 as a Identity Provider.
 
-Windows Azure AD Graph API lets you build data-driven applications using a REST-based API. You can use this REST API to query your customer data, find relationships in the directory, and customize your apps based on customer data.
+SimpleSAML PHP also supports some other identity protocols, such as Shibboleth 1.3, A-Select, CAS, OpenID, WS-Federation and OAuth. We have developed a library for Windows Azure Active Directory that uses SimpleSAML PHP. If you use SimpleSAML PHP for your authentication and authorization platform, adding Windows Azure Active Directory to your web application is easy. 
 
-For more information on how this module works, see the [README](https://github.com/auth0/node-waad) in the module or read it online.
+### IMPORTANT: PHP sample and Multiple web instances in production
+
+In this walkthrough we follow the convention set out in existing SimpleSAML PHP documentation of storing the token information from inside the cookie in to memory after authentication, and serve pages using data from this object for each additional page load. Azure recommends deploying your application onto multiple instances, so storing just the user email address in the cookie means load balancing won’t work. We recommend that you either serialize the token information provided in the cookie at each server call to the webserver or store the data in a shared datastore that multiple instances can access ensuring that calls to multiple instances of will work. 
+
+
 
 
 
@@ -78,15 +73,5 @@ For more information on how this module works, see the [README](https://github.c
 
 Code hosted on GitHub under Apache 2.0 license
 
-### Acknowledgements 
 
-We would like to acknowledge the folks who own/contribute to the following projects for their support of Windows Azure Active Directory and their libraries that were used to build this sample. In places where we forked these libraries to add additional functionality, we ensured that the chain of forking remains intact so you can navigate back to the original package. Working with such great partners in the open source community clearly illustrates what open collaboration can accomplish. Thank you!
-
-* Auth0's [WS-Federation and SAML parsing library](https://github.com/auth0/passport-wsfed-saml2)
-* Auth0's [Graph API Javascript library](https://github.com/auth0/node-waad)
-* Auth0's [SAML-P Library](https://github.com/auth0/node-saml)
-
-
-[passport-wsfed]: https://github.com/WindowsAzureAD/passport-wsfed-saml2
-[node-waad]: https://github.com/WindowsAzureAD/activedirectoryauthenticationlib-sdk-for-node
 
